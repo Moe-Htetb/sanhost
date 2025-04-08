@@ -2,6 +2,7 @@
 include 'db_conn.php';
 session_start();
 
+
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get form data
@@ -53,7 +54,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Redirect back to the form page
     header("Location: fifth1sem_ct.php");
     exit;
-
 } else {
     $_SESSION['error'] = 'Invalid request method';
     header("Location: fifth1sem_ct.php");
@@ -62,4 +62,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Close the database connection
 mysqli_close($conn);
-?>
