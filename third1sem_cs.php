@@ -33,7 +33,7 @@ if (!$result) {
 
         <div class="flex flex-col sm:flex-row w-full md:w-auto gap-4">
             <!-- Search Box -->
-            <div class="relative w-full sm:w-64">
+            <div class="relative w-full sm:w-64 md:w-32">
                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                     <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
@@ -321,116 +321,117 @@ if (!$result) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize modals
-    const addModal = document.getElementById('add-result-modal');
-    const editModal = document.getElementById('edit-result-modal');
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize modals
+        const addModal = document.getElementById('add-result-modal');
+        const editModal = document.getElementById('edit-result-modal');
 
-    // Function to toggle modal
-    function toggleModal(modal, show) {
-        if (show) {
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            document.body.style.overflow = 'hidden';
-        } else {
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-            document.body.style.overflow = 'auto';
+        // Function to toggle modal
+        function toggleModal(modal, show) {
+            if (show) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+            } else {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.body.style.overflow = 'auto';
+            }
         }
-    }
 
-    // Add button event
-    document.getElementById('addNewResultBtn')?.addEventListener('click', () => {
-        toggleModal(addModal, true);
-    });
+        // Add button event
+        document.getElementById('addNewResultBtn')?.addEventListener('click', () => {
+            toggleModal(addModal, true);
+        });
 
-    // Function to close add modal
-    window.closeAddModal = function() {
-        toggleModal(addModal, false);
-    }
-
-    // Close buttons for add modal
-    addModal.querySelectorAll('[data-modal-hide="add-result-modal"]').forEach(btn => {
-        btn.addEventListener('click', () => closeAddModal());
-    });
-
-    // Close on outside click for add modal
-    addModal.addEventListener('click', (e) => {
-        if (e.target === addModal) {
-            closeAddModal();
+        // Function to close add modal
+        window.closeAddModal = function() {
+            toggleModal(addModal, false);
         }
-    });
 
-    // Function to open edit modal
-    window.openEditModal = function(id, rollNo, cst1, cst2, cst3, cs1, cs2, cssk1, cstsk1) {
-        document.getElementById('edit-roll_no').disabled = true; // Disable the roll number input
+        // Close buttons for add modal
+        addModal.querySelectorAll('[data-modal-hide="add-result-modal"]').forEach(btn => {
+            btn.addEventListener('click', () => closeAddModal());
+        });
 
-        // Set the values in the form
-        document.getElementById('edit-id').value = id;
-        document.getElementById('edit-roll_no').value = rollNo;
-        document.getElementById('edit-cst1').value = cst1;
-        document.getElementById('edit-cst2').value = cst2;
-        document.getElementById('edit-cst3').value = cst3;
-        document.getElementById('edit-cs1').value = cs1;
-        document.getElementById('edit-cs2').value = cs2;
-        document.getElementById('edit-cssk1').value = cssk1;
-        document.getElementById('edit-cstsk1').value = cstsk1;
+        // Close on outside click for add modal
+        addModal.addEventListener('click', (e) => {
+            if (e.target === addModal) {
+                closeAddModal();
+            }
+        });
 
-        toggleModal(editModal, true);
-    }
+        // Function to open edit modal
+        window.openEditModal = function(id, rollNo, cst1, cst2, cst3, cs1, cs2, cssk1, cstsk1) {
+            document.getElementById('edit-roll_no').disabled = true; // Disable the roll number input
 
-    // Function to close edit modal
-    window.closeEditModal = function() {
-        toggleModal(editModal, false);
-    }
+            // Set the values in the form
+            document.getElementById('edit-id').value = id;
+            document.getElementById('edit-roll_no').value = rollNo;
+            document.getElementById('edit-cst1').value = cst1;
+            document.getElementById('edit-cst2').value = cst2;
+            document.getElementById('edit-cst3').value = cst3;
+            document.getElementById('edit-cs1').value = cs1;
+            document.getElementById('edit-cs2').value = cs2;
+            document.getElementById('edit-cssk1').value = cssk1;
+            document.getElementById('edit-cstsk1').value = cstsk1;
 
-    // Close buttons for edit modal
-    editModal.querySelectorAll('[data-modal-hide="edit-result-modal"]').forEach(btn => {
-        btn.addEventListener('click', () => closeEditModal());
-    });
-
-    // Close on outside click for edit modal
-    editModal.addEventListener('click', (e) => {
-        if (e.target === editModal) {
-            closeEditModal();
+            toggleModal(editModal, true);
         }
-    });
 
-    // Search functionality
-    const searchInput = document.getElementById('search-results');
-    if (searchInput) {
-        searchInput.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            const rows = document.querySelectorAll('tbody tr');
+        // Function to close edit modal
+        window.closeEditModal = function() {
+            toggleModal(editModal, false);
+        }
 
-            rows.forEach(row => {
-                const rollNo = row.querySelector('td:nth-child(1)').textContent.toLowerCase();
-                if (rollNo.includes(searchTerm)) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
+        // Close buttons for edit modal
+        editModal.querySelectorAll('[data-modal-hide="edit-result-modal"]').forEach(btn => {
+            btn.addEventListener('click', () => closeEditModal());
+        });
+
+        // Close on outside click for edit modal
+        editModal.addEventListener('click', (e) => {
+            if (e.target === editModal) {
+                closeEditModal();
+            }
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('search-results');
+        if (searchInput) {
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const rows = document.querySelectorAll('tbody tr');
+
+                rows.forEach(row => {
+                    const rollNo = row.querySelector('td:nth-child(1)').textContent.toLowerCase();
+                    if (rollNo.includes(searchTerm)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
             });
+        }
+    });
+
+    function confirmDelete(resultId) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = 'delete_result_third1sem_cs.php?id=' + resultId;
+            }
         });
     }
-});
-
-function confirmDelete(resultId) {
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            window.location.href = 'delete_result_third1sem_cs.php?id=' + resultId;
-        }
-    });
-}
 </script>
 
 </body>
+
 </html>
